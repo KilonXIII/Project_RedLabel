@@ -7,8 +7,8 @@ public class PlayerStateMachine : StateMachine
     public PlayerRunState RunState { get; private set; }
     public PlayerAttackState AttackState { get; private set; }
 
-    public State CurrentState { get; private set; }
-    public State PreviousState { get; private set; }
+    public new State CurrentState { get; private set; }
+    public new State PreviousState { get; private set; }
     
     public PlayerStateMachine(Player player) : base(player)
     {
@@ -21,14 +21,14 @@ public class PlayerStateMachine : StateMachine
         AttackState = new PlayerAttackState(player, this, "Attack");
     }
 
-    public void Initialize(State startingState)
+    public new void Initialize(State startingState)
     {
         CurrentState = startingState;
         CurrentState.Enter();
         PreviousState = null;
     }
 
-    public void ChangeState(State newState)
+    public new void ChangeState(State newState)
     {
         CurrentState.Exit();
         PreviousState = CurrentState;

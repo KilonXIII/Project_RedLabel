@@ -4,7 +4,7 @@ public class MovementController : MonoBehaviour
 {
     // [컴포넌트]
     private Rigidbody RB;
-    
+
     // [변수]
     private Vector3 workspace; 
     public int FacingDirection { get; private set; } = 1; 
