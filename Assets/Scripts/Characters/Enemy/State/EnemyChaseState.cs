@@ -4,7 +4,11 @@ public class EnemyChaseState : EnemyBaseState
 {
 	public EnemyChaseState(EnemyAI ai, EnemyController controller) : base(ai, controller) { }
 
-	public override void Enter() { }
+	public override void Enter() 
+	{
+		ai.anim.SetBool("isMoving", true);//∞»±‚ Ω√¿€
+	}
+
 
 	public override void Update()
 	{

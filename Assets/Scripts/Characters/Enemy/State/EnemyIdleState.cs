@@ -4,7 +4,12 @@ public class EnemyIdleState : EnemyBaseState
 {
 	public EnemyIdleState(EnemyAI ai, EnemyController controller) : base(ai, controller) { }
 
-	public override void Enter() { }
+	public override void Enter() 
+	{
+		ai.anim.SetBool("isMoving", false);//정시 상태
+
+	}
+
 
 	public override void Update()
 	{
