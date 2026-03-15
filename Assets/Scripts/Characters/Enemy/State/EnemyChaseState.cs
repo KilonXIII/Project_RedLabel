@@ -4,9 +4,16 @@ public class EnemyChaseState : EnemyBaseState
 {
 	public EnemyChaseState(EnemyAI ai, EnemyController controller) : base(ai, controller) { }
 
-	public override void Enter() 
+	public override void Enter()
 	{
-		ai.anim.SetBool("isMoving", true);//걷기 시작
+		if (ai.anim != null)
+		{
+			ai.anim.SetBool("isMoving", true);
+		}
+		else
+		{
+			Debug.LogWarning("EnemyAI: Animator를 찾을 수 없습니다!");
+		}
 	}
 
 

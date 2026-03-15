@@ -23,19 +23,38 @@ public class EnemyAttackState : EnemyBaseState
 
 	private IEnumerator AttackRoutine()
 	{
-		ai.anim.SetTrigger("Attack"); // 공격 애니메이션 트리거
-		ai.anim.SetBool("isMoving", false); // 공격 중엔 발 멈춤
+		// 1. ai나 ai.anim이 Null인지 확인
+		if (ai == null) yield break;
 
-		// 1. 공격 애니메이션의 휘두르는 타이밍까지 대기 (임시 0.5초)
+		if (ai.anim != null)
+		{
+			ai.anim.SetTrigger("Attack");
+			ai.anim.SetBool("isMoving", false);
+		}
+		else
+		{
+			Debug.LogWarning("EnemyAttackState: Animator가 없습니다!");
+		}
+
+		Debug.Log("적 공격 시작");
+
+		// 2. 공격 동작 대기 (0.5초)
 		yield return new WaitForSeconds(0.5f);
 
-		// 2. 실제 데미지 판정 로직 (나중에 여기에 작성)
-		Debug.Log("적 타격 판정 발생!");
+		// 3. 타격 판정 시점에서 플레이어 존재 확인 (26번 줄 근처 예상 지점)
+		if (ai.player != null)
+		{
+			float distance = Vector3.Distance(ai.transform.position, ai.player.position);
+			if (distance <= ai.attackRange)
+			{
+				Debug.Log("플레이어 타격!");
+			}
+		}
 
-		// 3. 전체 애니메이션이 끝날 때까지 대기 (임시 0.5초)
+		// 4. 나머지 애니메이션 시간 대기
 		yield return new WaitForSeconds(0.5f);
 
-		// 4. 추격 상태로 복귀
+		// 5. 다시 추격 상태로 변경
 		ai.ChangeState(ai.chaseState);
 	}
 }
